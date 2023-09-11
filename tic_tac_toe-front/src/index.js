@@ -81,7 +81,8 @@ class Board extends React.Component {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
     
-    // Agrega un botón para jugar de nuevo - esto es extra al tutorial
+    // Agrega un botón para jugar de nuevo - lo que se hace aca es que si gameOver es true y se apreta el boton
+    // se llama a la funcion resetGame que esta definida arriba para resetear el juego
   const playAgainButton = this.state.gameOver ? (
     <button onClick={() => this.resetGame()}>Play Again</button>
   ) : null;
