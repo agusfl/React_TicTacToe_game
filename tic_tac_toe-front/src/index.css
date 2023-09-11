@@ -54,6 +54,18 @@ ol, ul {
   margin-top: 20px; /* Agregamos espacio entre el tablero y la información del juego */
 }
 
-button {
-  margin-top: 10px; /* Agregamos espacio entre el botón y el tablero */
+/* Estilos CSS personalizados para el botón "Play Again" */
+.play-again-button {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Espacio superior */
+}
+.play-again-button:hover {
+  background-color: #45a049;
 }
