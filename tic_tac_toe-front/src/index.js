@@ -1,7 +1,13 @@
+/*
+Al tutorial le hago unos pequeños cambios para que se pueda jugar de nuevo una vez que
+haya un ganador o que se terminen los movimientos posibles.
+*/
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 /*
+El primer codigo antes de cambiarlo por la function Square:
+
 class Square extends React.Component {
   render() {
     return (
@@ -28,15 +34,32 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: true,
+      gameOver: false, // Nuevo estado para controlar si el juego ha terminado - esto es extra al tutorial - cambia a true cuando se termine el juego porque gano alguien o porque se completaron todos los casilleros - ver mas abajo en el codigo
     };
   }
   
     handleClick(i) {
     const squares = this.state.squares.slice();
+    if (calculateWinner(squares) || squares[i] || this.state.gameOver) {
+    return;
+    }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+    const winner = calculateWinner(squares); // lo declaro aca para usarlo en la definicion de abajo de gameOver
+    const gameOver = winner || squares.every((square) => square !== null); // defino gameOver como si winner es true osea que hay un ganador o si todos los cuadrados fueron completados por lo tanto son distinto a null
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext,
+      gameOver: gameOver, // Actualiza el estado de gameOver a true cuando haya un ganador
+    });
+  }
+  
+  // Agrega una función para reiniciar el juego y una vez que haya un ganador o que se terminen 
+  // los movimientos posibles
+  resetGame() {
+    this.setState({
+      squares: Array(9).fill(null), // se completa los 9 cuadrados del square en nulo vacio
+      xIsNext: true, // se marca como X is next true para que arranque denuevo
+      gameOver: false, // se pone la variable creada para ver si se termino el juego en false para que arranque neuvamente
     });
   }
   
@@ -50,7 +73,18 @@ class Board extends React.Component {
   }
 
   render() {
-    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+    
+    // Agrega un botón para jugar de nuevo - esto es extra al tutorial
+  const playAgainButton = this.state.gameOver ? (
+    <button onClick={() => this.resetGame()}>Play Again</button>
+  ) : null;
 
     return (
       <div>
@@ -70,6 +104,7 @@ class Board extends React.Component {
           {this.renderSquare(7)}
           {this.renderSquare(8)}
         </div>
+        {playAgainButton}
       </div>
     );
   }
@@ -89,6 +124,26 @@ class Game extends React.Component {
       </div>
     );
   }
+}
+
+function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
 }
 
 // ========================================

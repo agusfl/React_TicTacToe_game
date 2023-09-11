@@ -1,6 +1,10 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 ol, ul {
@@ -42,9 +46,14 @@ ol, ul {
 
 .game {
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Cambiamos la dirección a columna para centrar el contenido */
+  align-items: center; /* Centramos horizontalmente */
 }
 
 .game-info {
-  margin-left: 20px;
+  margin-top: 20px; /* Agregamos espacio entre el tablero y la información del juego */
+}
+
+button {
+  margin-top: 10px; /* Agregamos espacio entre el botón y el tablero */
 }
