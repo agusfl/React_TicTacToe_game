@@ -32,8 +32,8 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: true,
+      squares: Array(9).fill(null), // se ponene todos los casilleros en null y pasan a marcarse con X o O cuando se apreta el boton
+      xIsNext: true, // el primer turno es de X
       gameOver: false, // Nuevo estado para controlar si el juego ha terminado - esto es extra al tutorial - cambia a true cuando se termine el juego porque gano alguien o porque se completaron todos los casilleros - ver mas abajo en el codigo
     };
   }
