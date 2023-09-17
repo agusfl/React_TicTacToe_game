@@ -55,7 +55,7 @@ ol, ul {
 }
 
 /* Estilos CSS personalizados para el botón "Play Again" */
-.play-again-button {
+.start-again-button {
   background-color: #4CAF50;
   color: white;
   font-size: 14px;
@@ -66,6 +66,16 @@ ol, ul {
   transition: background-color 0.3s ease;
   margin-top: 20px; /* Espacio superior */
 }
-.play-again-button:hover {
+.start-again-button:hover {
   background-color: #45a049;
+}
+
+/* Estilos CSS para "X" */
+.x-square {
+  color: #4DA368; 
+}
+
+/* Estilos CSS para "O" */
+.o-square {
+  color: #F08A89; 
 }

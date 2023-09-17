@@ -5,24 +5,23 @@ haya un ganador o que se terminen los movimientos posibles.
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-/*
-El primer codigo antes de cambiarlo por la function Square:
 
-class Square extends React.Component {
-  render() {
-    return (
-      <button 
-        className="square" 
-        onClick={() => this.props.onClick()}>
-        {this.props.value}
-      </button>
-    );
-  }
-}
-*/
+// Se crea la clase Square que devuelve un boton que se va a renderizar en el tablero
+// La funcion onClick se pasa como prop desde el componente padre Board - ver codigo mas abajo en renderSquare
 function Square(props) {
+  
+  // Se crea una variable para agregarle una clase al boton que se va a renderizar
+  // para poder setear un color distinto a las 'X' y otro para las 'O'
+  let squareClass = 'square';
+  if (props.value === 'X') {
+    squareClass += ' x-square'; // Aplica la clase "x-square" para "X" seteada en el archivo css
+  } else if (props.value === 'O'){
+    squareClass += ' o-square'; // Aplica la clase "o-square" para "O" seteada en el archivo css
+  }
+
   return (
-    <button className="square" onClick={props.onClick}>
+    // Se agrega la clase squareClass al boton que se va a renderizar para usarla en el css
+    <button className={squareClass} onClick={props.onClick}>
       {props.value}
     </button>
   );
@@ -34,22 +33,20 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null), // se ponene todos los casilleros en null y pasan a marcarse con X o O cuando se apreta el boton
       xIsNext: true, // el primer turno es de X
-      gameOver: false, // Nuevo estado para controlar si el juego ha terminado - esto es extra al tutorial - cambia a true cuando se termine el juego porque gano alguien o porque se completaron todos los casilleros - ver mas abajo en el codigo
-    };
-  }
+  }}
   
     handleClick(i) {
+    // Se crea una copia del array de squares para poder modificarlo
     const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i] || this.state.gameOver) {
+    if (calculateWinner(squares) || squares[i]) {
     return;
     }
+    // Se setea los valores que van a ir en cada cuadrado X o O
     squares[i] = this.state.xIsNext ? 'X' : 'O';
-    const winner = calculateWinner(squares); // lo declaro aca para usarlo en la definicion de abajo de gameOver
-    const gameOver = winner || squares.every((square) => square !== null); // defino gameOver como si winner es true osea que hay un ganador o si todos los cuadrados fueron completados por lo tanto son distinto a null
+    // Se setea el estado de squares y xIsNext
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext,
-      gameOver: gameOver, // Actualiza el estado de gameOver a true cuando haya un ganador
     });
   }
   
@@ -59,10 +56,10 @@ class Board extends React.Component {
     this.setState({
       squares: Array(9).fill(null), // se completa los 9 cuadrados del square en nulo vacio
       xIsNext: true, // se marca como X is next true para que arranque denuevo
-      gameOver: false, // se pone la variable creada para ver si se termino el juego en false para que arranque neuvamente
     });
   }
   
+  // Se crea una funcion para renderizar cada cuadrado del tablero
   renderSquare(i) {
     return (
       <Square 
@@ -83,9 +80,8 @@ class Board extends React.Component {
     
     // Agrega un botón para jugar de nuevo - lo que se hace aca es que si gameOver es true y se apreta el boton
     // se llama a la funcion resetGame que esta definida arriba para resetear el juego
-  const playAgainButton = this.state.gameOver ? (
-    <button className='play-again-button' onClick={() => this.resetGame()}>Play Again</button>
-  ) : null;
+  const startAgainButton = 
+    <button className='start-again-button' onClick={() => this.resetGame()}>Start Again</button>;
 
     return (
       <div>
@@ -105,7 +101,7 @@ class Board extends React.Component {
           {this.renderSquare(7)}
           {this.renderSquare(8)}
         </div>
-        {playAgainButton}
+        {startAgainButton}
       </div>
     );
   }
@@ -117,10 +113,6 @@ class Game extends React.Component {
       <div className="game">
         <div className="game-board">
             <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
         </div>
       </div>
     );
