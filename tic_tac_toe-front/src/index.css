@@ -19,6 +19,7 @@ ol, ul {
 
 .status {
   margin-bottom: 10px;
+  font-size: 16px; /* Cambiar el tamaño de la letra */
 }
 
 .square {
@@ -48,6 +49,11 @@ ol, ul {
   display: flex;
   flex-direction: column; /* Cambiamos la dirección a columna para centrar el contenido */
   align-items: center; /* Centramos horizontalmente */
+}
+
+/* Aumentar el tamaño del tablero */
+.game-board {
+  transform: scale(1.4); /* Un valor de 1.4 aumentará el tamaño en un 40%*/
 }
 
 .game-info {

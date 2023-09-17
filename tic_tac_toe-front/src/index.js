@@ -73,9 +73,24 @@ class Board extends React.Component {
     const winner = calculateWinner(this.state.squares);
     let status;
     if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      // status = 'Winner: ' + winner;
+
+      // Seteo un estilo personalizado para el texto que dice "Winner" dependiendo si el valor es X o O
+      // se toman los colores seteados en el archivo css para la X o para la O
+      status =(
+        <span>
+        Winner: <span className={winner === 'X' ? 'x-square' : 'o-square'}>{winner}</span>
+      </span>
+      );
+    } else {      
+      // Seteo un estilo personalizado para el texto que dice "Next player" dependiendo si el valor es X o O
+      status = (
+        // si xIsNext es true se agrega la clase x-square al span que contiene la X y sino se agrega la clase o-square
+        // esto hace que tome los estilos del css para cada caso, ademas seteo el texto que va a ir dentro del span X o O
+        <span>
+          Next player: <span className={this.state.xIsNext ? 'x-square' : 'o-square'}>{this.state.xIsNext ? 'X' : 'O'}</span>
+        </span>
+      );
     }
     
     // Agrega un botón para jugar de nuevo - lo que se hace aca es que si gameOver es true y se apreta el boton
