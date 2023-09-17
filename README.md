@@ -159,3 +159,7 @@ Handling events with React elements has some syntactic differences:
 
 * React event handlers are named using camelCase, rather than lowercase.
 * With JSX you pass a function as the event handler, rather than a string.
+
+## Extra information:
+
+Para cambiar el titulo y el icono de la aplicacion ir a: public/index.html
