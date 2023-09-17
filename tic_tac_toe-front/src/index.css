@@ -56,21 +56,17 @@ ol, ul {
   transform: scale(1.4); /* Un valor de 1.4 aumentará el tamaño en un 40%*/
 }
 
-.game-info {
-  margin-top: 20px; /* Agregamos espacio entre el tablero y la información del juego */
-}
-
 /* Estilos CSS personalizados para el botón "Play Again" */
 .start-again-button {
   background-color: #4CAF50;
   color: white;
   font-size: 14px;
-  padding: 10px 20px;
+  padding: 8px 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px; /* Espacio superior */
+  margin-top: 15px; /* Espacio superior */
 }
 .start-again-button:hover {
   background-color: #45a049;
@@ -88,17 +84,19 @@ ol, ul {
 
 /* Agrega estilos para el contenedor del historial de victorias */
 .wins {
-  width: 150px; /* Ajusta el ancho según tus preferencias */
+  width: 90%; /* Ajusta el ancho según tus preferencias */
   background-color: #f0f0f0; /* Color de fondo */
   padding: 10px; /* Espaciado interior */
   border-radius: 5px; /* Borde redondeado */
-  margin-left: 20px; /* Espacio a la derecha del tablero */
+  margin-top: 30%;
 }
 
 /* Estilos para el título del historial de victorias */
 .wins-title {
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 /* Estilos para el contador de victorias de X */
@@ -123,6 +121,7 @@ ol, ul {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 10px;
 }
 
 .reset-wins:hover {

@@ -111,10 +111,12 @@ class Board extends React.Component {
     );
   }
 
+  // Funcion para renderizar el historial de victorias, se muestra el contador de victorias de 'X' y 'O'
+  // y se da la opcion de resetear el contador
   renderWins() {
     return (
       <div className="wins">
-        <div className="wins-title">Wins:</div>
+        <div className="wins-title">History of Wins:</div>
         <div className="wins-x">X: {this.state.winsX}</div>
         <div className="wins-o">O: {this.state.winsO}</div>
         <button className="reset-wins" onClick={() => this.resetWins()}>Reset</button>
@@ -203,9 +205,9 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     /*
-    Esta línea de código verifica si las tres posiciones del tablero squares representadas por a, b y c
+    Se verifica si las tres posiciones del tablero squares representadas por a, b y c
     contienen el mismo valor ('X' o 'O') y están ocupadas, lo que significa que un jugador
-    ha completado una combinación ganadora en el juego de tic-tac-toe
+    ha completado una combinación ganadora en el juego 
     */ 
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       // Actualiza el contador de victorias y llama a setState para reflejar los cambios en el estado
