@@ -1,6 +1,7 @@
 /*
 Al tutorial le hago unos pequeños cambios para que se pueda jugar de nuevo una vez que
 haya un ganador o que se terminen los movimientos posibles.
+Por mas comentarios del codigo ver: notas Api_Stock - React
 */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -33,21 +34,54 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null), // se ponene todos los casilleros en null y pasan a marcarse con X o O cuando se apreta el boton
       xIsNext: true, // el primer turno es de X
+      winsX: 0, // Inicializa el contador de victorias de X
+      winsO: 0, // Inicializa el contador de victorias de O
   }}
   
+    // Definimos el metodo handleClick que se va a llamar cuando se aprete un boton del Board
     handleClick(i) {
     // Se crea una copia del array de squares para poder modificarlo
     const squares = this.state.squares.slice();
+    
+    // Se llama a la funcion calculateWinner para ver si hay un ganador (si 'squares' es verdadero) o si se terminaron los movimientos posibles (square[i] es verdadero)
     if (calculateWinner(squares) || squares[i]) {
-    return;
+      // se retorna para que no se haga nada si hay un ganador o si se terminaron los movimientos posibles a menos que se aprete el boton de jugar de nuevo
+      return;
     }
+
     // Se setea los valores que van a ir en cada cuadrado X o O
     squares[i] = this.state.xIsNext ? 'X' : 'O';
-    // Se setea el estado de squares y xIsNext
-    this.setState({
-      squares: squares,
-      xIsNext: !this.state.xIsNext,
-    });
+    
+    /*
+    A continuacion se hacen unos calculos (para ver el historial de victorias) dentro de handleClick porque 
+    la funcion calculateWinner (creada mas abajo y fuera de la clase Board) no tiene acceso al contexto
+    del componente y su estado por eso no puede actualizar el estado del componente directamente
+    */
+    // Se crea la variable winner que llama a calculateWinner y se setea el valor de quien haya ganado
+    const winner = calculateWinner(squares);
+
+    // Si el ganador es 'X', actualiza los cuadrados, el siguiente jugador y el contador de victorias
+    if (winner === 'X') {
+      // Se llama a setState para actualizar el estado del componente basandonos en el estado anterior (prevState)
+      this.setState((prevState) => ({
+        squares: squares, // Actualiza los cuadrados
+        xIsNext: !prevState.xIsNext, // Cambia el valor de xIsNext al contrario del valor anterior para que le toque al proximo jugador
+        winsX: prevState.winsX + 1, // Incrementa el contador de victorias de X
+      }));
+      // Si el ganador es 'O', actualiza los cuadrados, el siguiente jugador y el contador de victorias
+    } else if (winner === 'O') {
+      this.setState((prevState) => ({
+        squares: squares,
+        xIsNext: !prevState.xIsNext,
+        winsO: prevState.winsO + 1, // Incrementa el contador de victorias de O
+      }));
+    } else {
+      // Si no hay ganador, actualiza solo los cuadrados y el siguiente jugador ya que la partida aun no termino
+      this.setState({
+        squares: squares, // Actualiza los cuadrados
+        xIsNext: !this.state.xIsNext, // Cambia el valor de xIsNext a false
+      });
+    }
   }
   
   // Agrega una función para reiniciar el juego y una vez que haya un ganador o que se terminen 
@@ -58,6 +92,14 @@ class Board extends React.Component {
       xIsNext: true, // se marca como X is next true para que arranque denuevo
     });
   }
+
+  // Funcion para resetear el contador de victorias de 'X' y 'O'
+  resetWins() {
+    this.setState({
+      winsX: 0,
+      winsO: 0,
+    });
+  }  
   
   // Se crea una funcion para renderizar cada cuadrado del tablero
   renderSquare(i) {
@@ -66,6 +108,17 @@ class Board extends React.Component {
              value={this.state.squares[i]} 
              onClick={() => this.handleClick(i)}
              />
+    );
+  }
+
+  renderWins() {
+    return (
+      <div className="wins">
+        <div className="wins-title">Wins:</div>
+        <div className="wins-x">X: {this.state.winsX}</div>
+        <div className="wins-o">O: {this.state.winsO}</div>
+        <button className="reset-wins" onClick={() => this.resetWins()}>Reset</button>
+      </div>
     );
   }
 
@@ -117,6 +170,8 @@ class Board extends React.Component {
           {this.renderSquare(8)}
         </div>
         {startAgainButton}
+        {/* Mostrar el historial de victorias */}
+        {this.renderWins()}
       </div>
     );
   }
@@ -147,7 +202,14 @@ function calculateWinner(squares) {
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
+    /*
+    Esta línea de código verifica si las tres posiciones del tablero squares representadas por a, b y c
+    contienen el mismo valor ('X' o 'O') y están ocupadas, lo que significa que un jugador
+    ha completado una combinación ganadora en el juego de tic-tac-toe
+    */ 
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      // Actualiza el contador de victorias y llama a setState para reflejar los cambios en el estado
+      // retorna el valor de la posicion a que es el que gano ('X' o 'O')
       return squares[a];
     }
   }

@@ -85,3 +85,46 @@ ol, ul {
 .o-square {
   color: #F08A89; 
 }
+
+/* Agrega estilos para el contenedor del historial de victorias */
+.wins {
+  width: 150px; /* Ajusta el ancho según tus preferencias */
+  background-color: #f0f0f0; /* Color de fondo */
+  padding: 10px; /* Espaciado interior */
+  border-radius: 5px; /* Borde redondeado */
+  margin-left: 20px; /* Espacio a la derecha del tablero */
+}
+
+/* Estilos para el título del historial de victorias */
+.wins-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Estilos para el contador de victorias de X */
+.wins-x {
+  color: #4DA368; /* Color para X */
+  margin-bottom: 5px;
+}
+
+/* Estilos para el contador de victorias de O */
+.wins-o {
+  color: #F08A89; /* Color para O */
+  margin-bottom: 5px;
+}
+
+/* Estilos para el botón de reinicio de victorias */
+.reset-wins {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 14px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-wins:hover {
+  background-color: #45a049;
+}
